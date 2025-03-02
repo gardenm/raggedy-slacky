@@ -37,9 +37,9 @@
 - [x] Create repository classes for each entity
 - [x] Configure database connection in app module
 - [x] Update docker-compose.yml for PostgreSQL config
-- [ ] Write unit tests for repositories
+- [x] Write unit tests for repositories
 - [x] Create database seeding utilities
-- [ ] Test database migrations
+- [x] Test database migrations
 - [x] Add database logging configuration
 - [x] Document database schema
 
