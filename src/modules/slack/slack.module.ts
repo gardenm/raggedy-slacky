@@ -5,17 +5,19 @@ import { SlackController } from './slack.controller';
 import { Message } from '../../entities/message.entity';
 import { Channel } from '../../entities/channel.entity';
 import { SlackUser } from '../../entities/slack-user.entity';
-import { SlackParserService } from './slack-parser.service';
 import { IndexingService } from './indexing.service';
 import { SearchModule } from '../search/search.module';
+import { SlackParserModule } from './slack-parser/slack-parser.module';
+import { SlackParserService } from './slack-parser/slack-parser.service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Message, Channel, SlackUser]),
     SearchModule,
+    SlackParserModule,
   ],
-  providers: [SlackService, SlackParserService, IndexingService],
+  providers: [SlackService, IndexingService],
   controllers: [SlackController],
-  exports: [SlackService, SlackParserService, IndexingService],
+  exports: [SlackService, IndexingService],
 })
 export class SlackModule {}
