@@ -4,6 +4,11 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as entities from './entities';
+import { UsersModule } from './modules/users/users.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { SearchModule } from './modules/search/search.module';
+import { RagModule } from './modules/rag/rag.module';
+import { SlackModule } from './modules/slack/slack.module';
 
 @Module({
   imports: [
@@ -25,6 +30,11 @@ import * as entities from './entities';
         logging: configService.get('DB_LOGGING', 'false') === 'true',
       }),
     }),
+    UsersModule,
+    AuthModule,
+    SearchModule,
+    RagModule,
+    SlackModule,
   ],
   controllers: [AppController],
   providers: [AppService],
