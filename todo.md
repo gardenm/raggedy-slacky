@@ -5,7 +5,7 @@
 ### Initial Project Setup
 - [x] Create NestJS backend project with TypeScript
 - [x] Configure TypeScript settings
-- [ ] Set up project directory structure
+- [x] Set up project directory structure
 - [x] Initialize Git repository
 - [x] Create initial .gitignore file
 - [x] Set up Docker and docker-compose.yml with:
@@ -18,7 +18,7 @@
 - [x] Write test for health check endpoint
 - [x] Create README.md with project documentation
 - [x] Set up ESLint and Prettier for code quality
-- [ ] Create initial CI/CD pipeline config
+- [x] Create initial CI/CD pipeline config
 
 ### Database Schema Design
 - [ ] Design database schema based on specification
