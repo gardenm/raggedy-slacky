@@ -9,6 +9,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { SearchModule } from './modules/search/search.module';
 import { RagModule } from './modules/rag/rag.module';
 import { SlackModule } from './modules/slack/slack.module';
+import { VectorModule } from './modules/vector/vector.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -45,6 +46,8 @@ import configuration from './config/configuration';
     SearchModule,
     RagModule,
     SlackModule,
+    // Vector Database
+    VectorModule,
   ],
   controllers: [AppController],
   providers: [AppService],
