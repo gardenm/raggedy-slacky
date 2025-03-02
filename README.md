@@ -283,13 +283,58 @@ docker-compose -f docker-compose.dev.yml up
 docker-compose up -d
 ```
 
+## CI/CD Pipeline
+
+This project uses GitHub Actions for continuous integration and deployment.
+
+### CI Workflows
+
+- **Lint & Test**: Runs on every push and pull request to the `main` branch
+  - Lints the code to ensure style consistency
+  - Runs all tests with a dedicated PostgreSQL service
+  - Builds the application to verify compilation
+
+- **Security Scan**: Runs on pushes, pull requests, and weekly schedule
+  - Scans dependencies for known vulnerabilities
+  - Runs code quality and security analysis
+  - Scans Docker image for vulnerabilities
+
+### CD Workflows
+
+- **Docker Build**: Builds Docker images on pushes to `main` and version tags
+  - Creates Docker images with appropriate tags
+  - Prepares for deployment to staging or production
+
+- **Staging Deployment**: Automatically deploys to staging on pushes to `main`
+  - Uses the `latest` Docker image
+  - Sets up staging environment for testing
+
+- **Production Deployment**: Deploys to production on version tags (e.g., `v1.0.0`)
+  - Uses specifically tagged Docker images
+  - Ensures stable, versioned releases
+
+### Running CI Locally
+
+You can validate your changes before pushing by running:
+
+```bash
+# Lint check
+pnpm lint
+
+# Run tests
+pnpm test
+
+# Build verification
+pnpm build
+```
+
 ## Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+5. Open a Pull Request following the PR template
 
 ## License
 

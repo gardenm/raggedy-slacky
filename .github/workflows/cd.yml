@@ -1,0 +1,102 @@
+name: CD
+
+on:
+  push:
+    branches: [ main ]
+    tags:
+      - 'v*'
+
+jobs:
+  docker-build:
+    name: Build Docker Images
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Set environment variables
+        id: vars
+        run: |
+          # Get version from package.json
+          VERSION=$(node -p "require('./package.json').version")
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          
+          # Use tag name if available, otherwise use version from package.json
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            TAG=${GITHUB_REF#refs/tags/}
+            echo "TAG=$TAG" >> $GITHUB_ENV
+          else
+            # For non-tagged pushes, use 'latest' for main branch or branch name
+            if [[ $GITHUB_REF == refs/heads/main ]]; then
+              echo "TAG=latest" >> $GITHUB_ENV
+            else
+              BRANCH=${GITHUB_REF#refs/heads/}
+              echo "TAG=$BRANCH" >> $GITHUB_ENV
+            fi
+          fi
+          
+          echo "VERSION=$VERSION, TAG=$TAG"
+
+      # This is a placeholder - in a real project you would add GitHub Container Registry authentication
+      # - name: Login to GitHub Container Registry
+      #   uses: docker/login-action@v2
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: false # Set to true when you add container registry
+          tags: |
+            raggedy-slacky:${{ env.TAG }}
+            raggedy-slacky:${{ env.VERSION }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # Placeholder for staging deployment job
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: docker-build
+    # Deploy only on push to main, not on tags
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Deploy to staging (placeholder)
+        run: |
+          echo "Deploying to staging environment..."
+          echo "In a real deployment, you would:"
+          echo "1. SSH into your server or use a deployment platform"
+          echo "2. Pull the latest docker images"
+          echo "3. Run docker-compose up -d or your deployment script"
+          echo "4. Run database migrations if needed"
+          echo "5. Verify the deployment succeeded"
+          
+  # Placeholder for production deployment job
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: docker-build
+    # Deploy only on version tags
+    if: startsWith(github.ref, 'refs/tags/v')
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Deploy to production (placeholder)
+        run: |
+          echo "Deploying version ${{ github.ref_name }} to production environment..."
+          echo "This would typically involve:"
+          echo "1. Connecting to your production server or cloud platform"
+          echo "2. Pulling the tagged docker image"
+          echo "3. Deploying with proper environment variables"
+          echo "4. Running database migrations safely"
+          echo "5. Performing health checks and rollback if needed"
