@@ -1,0 +1,10 @@
+dist
+node_modules
+coverage
+.git
+.vscode
+.DS_Store
+.env
+.env.*
+*.md
+*.json

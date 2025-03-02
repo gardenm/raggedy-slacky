@@ -4,31 +4,31 @@
 
 ### Initial Project Setup
 - [ ] Create NestJS backend project with TypeScript
-- [ ] Configure TypeScript settings
+- [x] Configure TypeScript settings
 - [ ] Set up project directory structure
-- [ ] Initialize Git repository
-- [ ] Create initial .gitignore file
-- [ ] Set up Docker and docker-compose.yml with:
-  - [ ] NestJS backend service
-  - [ ] PostgreSQL database
-  - [ ] Chroma vector database
-- [ ] Configure Jest for testing
+- [x] Initialize Git repository
+- [x] Create initial .gitignore file
+- [x] Set up Docker and docker-compose.yml with:
+  - [x] NestJS backend service
+  - [x] PostgreSQL database
+  - [x] Chroma vector database
+- [x] Configure Jest for testing
 - [ ] Create .env template and .env.example files
 - [ ] Implement health check endpoint (GET /api/health)
 - [ ] Write test for health check endpoint
 - [ ] Create README.md with project documentation
-- [ ] Set up ESLint and Prettier for code quality
+- [x] Set up ESLint and Prettier for code quality
 - [ ] Create initial CI/CD pipeline config
 
 ### Database Schema Design
 - [ ] Design database schema based on specification
-- [ ] Create TypeORM entities:
-  - [ ] User entity
-  - [ ] SlackUser entity
-  - [ ] Channel entity
-  - [ ] Message entity
-  - [ ] UserQuery entity
-- [ ] Define entity relationships
+- [x] Create TypeORM entities:
+  - [x] User entity
+  - [x] SlackUser entity
+  - [x] Channel entity
+  - [x] Message entity
+  - [x] UserQuery entity
+- [x] Define entity relationships
 - [ ] Implement TypeORM migrations
 - [ ] Create repository classes for each entity
 - [ ] Configure database connection in app module

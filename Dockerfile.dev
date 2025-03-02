@@ -1,0 +1,20 @@
+FROM node:20-alpine
+
+# Install pnpm
+RUN corepack enable && corepack prepare pnpm@8.15.4 --activate
+
+WORKDIR /app
+
+# Copy pnpm specific files
+COPY pnpm-lock.yaml ./
+COPY package.json ./
+COPY .npmrc ./
+
+# Install dependencies
+RUN pnpm install
+
+# Copy source files
+COPY . .
+
+# Run development build in watch mode
+CMD ["pnpm", "start:dev"]
