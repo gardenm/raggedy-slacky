@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigService } from '@nestjs/config';
 import { DataSource } from 'typeorm';
+import * as os from 'os';
 
 describe('AppController', () => {
   let appController: AppController;
@@ -50,13 +51,49 @@ describe('AppController', () => {
 
   describe('getDetailedHealth', () => {
     it('should return detailed health information', async () => {
-      // Mock the detailed health method
+      // Mock the detailed health method with correct platform type
       const mockHealthData = {
         status: 'ok',
         timestamp: new Date(),
         version: '0.1.0',
         environment: 'test',
-        // Other fields would be here
+        uptime: {
+          app: {
+            seconds: 123,
+            formatted: '0d 0h 2m 3s',
+          },
+          system: {
+            seconds: 12345,
+            formatted: '0d 3h 25m 45s',
+          },
+        },
+        system: {
+          cpuLoad: [0.1, 0.2, 0.3],
+          memory: {
+            free: '1.5 GB',
+            total: '8 GB',
+            percentFree: 20,
+          },
+          platform: process.platform,
+          arch: process.arch,
+        },
+        process: {
+          memory: {
+            rss: '100 MB',
+            heapTotal: '50 MB',
+            heapUsed: '30 MB',
+            external: '10 MB',
+          },
+          pid: 1234,
+        },
+        services: {
+          database: {
+            status: 'ok',
+            error: null,
+            type: 'postgres' as const,
+            name: 'test_db',
+          },
+        },
       };
       
       jest.spyOn(appService, 'getDetailedHealth').mockResolvedValue(mockHealthData);
@@ -68,14 +105,47 @@ describe('AppController', () => {
     });
 
     it('should report degraded status when database has issues', async () => {
-      // Mock a degraded state
+      // Mock a degraded state with correct platform type
       const mockDegradedData = {
         status: 'degraded',
         timestamp: new Date(),
+        version: '0.1.0',
+        environment: 'test',
+        uptime: {
+          app: {
+            seconds: 123,
+            formatted: '0d 0h 2m 3s',
+          },
+          system: {
+            seconds: 12345,
+            formatted: '0d 3h 25m 45s',
+          },
+        },
+        system: {
+          cpuLoad: [0.1, 0.2, 0.3],
+          memory: {
+            free: '1.5 GB',
+            total: '8 GB',
+            percentFree: 20,
+          },
+          platform: process.platform,
+          arch: process.arch,
+        },
+        process: {
+          memory: {
+            rss: '100 MB',
+            heapTotal: '50 MB',
+            heapUsed: '30 MB',
+            external: '10 MB',
+          },
+          pid: 1234,
+        },
         services: {
           database: {
             status: 'error',
             error: 'Connection failed',
+            type: 'postgres' as const,
+            name: 'test_db',
           },
         },
       };
