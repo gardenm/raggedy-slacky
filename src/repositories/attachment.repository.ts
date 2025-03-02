@@ -49,11 +49,11 @@ export class AttachmentRepository extends BaseRepository<Attachment> {
    * @returns Array of attachments with local files
    */
   async findWithLocalFiles(): Promise<Attachment[]> {
-    return this.findAll({
-      where: [
-        { localPath: (...args) => `${args[0]} IS NOT NULL` },
-      ],
-    });
+    // Using raw query builder to handle IS NOT NULL condition
+    return this.getRepository()
+      .createQueryBuilder('attachment')
+      .where('attachment.local_path IS NOT NULL')
+      .getMany();
   }
 
   /**
@@ -74,9 +74,11 @@ export class AttachmentRepository extends BaseRepository<Attachment> {
    * @returns Array of attachments matching the filename
    */
   async searchByFilename(filename: string): Promise<Attachment[]> {
-    return this.findAll({
-      where: { filename: (...args) => `${args[0]} ILIKE '%${filename}%'` },
-    });
+    // Using raw query builder for ILIKE operation
+    return this.getRepository()
+      .createQueryBuilder('attachment')
+      .where('attachment.filename ILIKE :searchTerm', { searchTerm: `%${filename}%` })
+      .getMany();
   }
 
   /**

@@ -64,12 +64,12 @@ export class ConversationMessageRepository extends BaseRepository<ConversationMe
    * @returns Array of messages that reference Slack messages
    */
   async findWithReferences(conversationId: number): Promise<ConversationMessage[]> {
-    return this.findAll({
-      where: {
-        conversationId,
-        referencedMessages: (...args) => `${args[0]} IS NOT NULL AND jsonb_array_length(${args[0]}) > 0`,
-      },
-    });
+    return this.getRepository()
+      .createQueryBuilder('cm')
+      .where('cm.conversation_id = :conversationId', { conversationId })
+      .andWhere('cm.referenced_messages IS NOT NULL')
+      .andWhere('jsonb_array_length(cm.referenced_messages) > 0')
+      .getMany();
   }
 
   /**

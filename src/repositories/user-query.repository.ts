@@ -89,13 +89,16 @@ export class UserQueryRepository extends BaseRepository<UserQuery> {
    * @returns Array of queries with results
    */
   async findQueriesWithResults(userId?: number): Promise<UserQuery[]> {
-    return this.findAll({
-      where: {
-        results: (...args) => `${args[0]} IS NOT NULL`,
-        ...(userId && { userId }),
-      },
-      order: { timestamp: 'DESC' },
-    });
+    const queryBuilder = this.getRepository()
+      .createQueryBuilder('uq')
+      .where('uq.results IS NOT NULL')
+      .orderBy('uq.timestamp', 'DESC');
+      
+    if (userId) {
+      queryBuilder.andWhere('uq.user_id = :userId', { userId });
+    }
+    
+    return queryBuilder.getMany();
   }
 
   /**

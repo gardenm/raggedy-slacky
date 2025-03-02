@@ -1,10 +1,10 @@
-import { Repository, FindOptionsWhere, FindOneOptions, FindManyOptions, DeepPartial } from 'typeorm';
+import { Repository, FindOptionsWhere, FindOneOptions, FindManyOptions, DeepPartial, ObjectLiteral } from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
 
 /**
  * Base repository providing common CRUD operations for all entities
  */
-export class BaseRepository<T> {
+export class BaseRepository<T extends ObjectLiteral> {
   constructor(private readonly repository: Repository<T>) {}
 
   /**
@@ -96,7 +96,8 @@ export class BaseRepository<T> {
    */
   async remove(id: number): Promise<T> {
     const entity = await this.findByIdOrFail(id);
-    return this.repository.remove(entity as any);
+    const result = await this.repository.remove(entity as any);
+    return Array.isArray(result) ? result[0] : result;
   }
 
   /**
