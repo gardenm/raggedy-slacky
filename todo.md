@@ -16,7 +16,7 @@
 - [ ] Create .env template and .env.example files
 - [ ] Implement health check endpoint (GET /api/health)
 - [ ] Write test for health check endpoint
-- [ ] Create README.md with project documentation
+- [x] Create README.md with project documentation
 - [x] Set up ESLint and Prettier for code quality
 - [ ] Create initial CI/CD pipeline config
 
