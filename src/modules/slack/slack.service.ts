@@ -21,18 +21,28 @@ export class SlackService {
   }
 
   async importData(importRequest: ImportRequestDto) {
-    const { path: importPath, resetData } = importRequest;
+    const { path: importPath, resetData, batchOptions } = importRequest;
     
     // Use the provided path or fall back to the configured default path
     const resolvedPath = importPath || this.defaultExportPath;
     
-    const result = await this.indexingService.indexAll(resolvedPath, resetData);
+    const startTime = Date.now();
+    const result = await this.indexingService.indexAll(resolvedPath, resetData, batchOptions);
+    const duration = (Date.now() - startTime) / 1000;
     
     return {
       success: true,
       path: resolvedPath,
       ...result,
+      duration,
     };
+  }
+  
+  /**
+   * Get statistics about the indexed data
+   */
+  async getStats() {
+    return this.indexingService.getIndexStats();
   }
 
   /**
