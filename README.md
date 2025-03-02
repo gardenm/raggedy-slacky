@@ -160,6 +160,10 @@ The `resetData` parameter (optional, defaults to `false`):
 
 - `POST /api/admin/slack/import` - Import Slack export data
 
+### System
+
+- `GET /api/health` - Detailed health check with system stats and service status
+
 ## Testing
 
 ```bash
