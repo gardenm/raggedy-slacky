@@ -92,6 +92,38 @@ pnpm start:prod
 docker-compose up -d
 ```
 
+## Database Management
+
+### Running Migrations
+
+Database migrations are managed through TypeORM. The following commands are available for managing migrations:
+
+```bash
+# Create a new migration
+pnpm migration:create <migration-name>
+
+# Run migrations
+pnpm migration:run
+
+# Revert the last migration
+pnpm migration:revert
+
+# Run migrations in Docker container
+./scripts/run-migrations-docker.sh
+```
+
+### Seeding the Database
+
+You can seed the database with initial data using:
+
+```bash
+# Seed the database locally
+pnpm seed
+
+# Seed the database in Docker container
+./scripts/seed-database-docker.sh
+```
+
 ## Working with Slack Exports
 
 ### Preparing the Slack Export
@@ -196,7 +228,11 @@ src/
 │   ├── slack-user.entity.ts  # Slack workspace member
 │   ├── channel.entity.ts  # Slack channel
 │   ├── message.entity.ts  # Slack message metadata
-│   └── user-query.entity.ts  # User search history
+│   ├── message-content.entity.ts  # Message content storage
+│   ├── attachment.entity.ts  # File attachments
+│   ├── user-query.entity.ts  # User search history
+│   ├── conversation.entity.ts  # RAG conversations
+│   └── conversation-message.entity.ts  # Individual RAG messages
 │
 ├── modules/               # Feature modules
 │   ├── auth/              # Authentication

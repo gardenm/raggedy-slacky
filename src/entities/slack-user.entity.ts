@@ -17,6 +17,12 @@ export class SlackUser {
 
   @Column({ nullable: true })
   avatar: string;
+  
+  @Column({ default: false })
+  isBot: boolean;
+  
+  @Column({ type: 'jsonb', nullable: true })
+  metadata: Record<string, any>;
 
   @OneToMany(() => Message, (message) => message.slackUser)
   messages: Message[];

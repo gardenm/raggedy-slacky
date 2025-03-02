@@ -21,23 +21,27 @@
 - [x] Create initial CI/CD pipeline config
 
 ### Database Schema Design
-- [ ] Design database schema based on specification
+- [x] Design database schema based on specification
 - [x] Create TypeORM entities:
   - [x] User entity
   - [x] SlackUser entity
   - [x] Channel entity
   - [x] Message entity
   - [x] UserQuery entity
+  - [x] MessageContent entity
+  - [x] Attachment entity
+  - [x] Conversation entity
+  - [x] ConversationMessage entity
 - [x] Define entity relationships
-- [ ] Implement TypeORM migrations
-- [ ] Create repository classes for each entity
-- [ ] Configure database connection in app module
-- [ ] Update docker-compose.yml for PostgreSQL config
+- [x] Implement TypeORM migrations
+- [x] Create repository classes for each entity
+- [x] Configure database connection in app module
+- [x] Update docker-compose.yml for PostgreSQL config
 - [ ] Write unit tests for repositories
-- [ ] Create database seeding utilities
+- [x] Create database seeding utilities
 - [ ] Test database migrations
-- [ ] Add database logging configuration
-- [ ] Document database schema
+- [x] Add database logging configuration
+- [x] Document database schema
 
 ### Vector Database Integration
 - [ ] Research Chroma API and functionality

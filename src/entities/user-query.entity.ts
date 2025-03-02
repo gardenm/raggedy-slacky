@@ -21,4 +21,10 @@ export class UserQuery {
 
   @Column({ type: 'jsonb', nullable: true })
   results: Record<string, any>;
+  
+  @Column({ default: false })
+  isConversational: boolean;
+  
+  @Column({ nullable: true })
+  sessionId: string;
 }

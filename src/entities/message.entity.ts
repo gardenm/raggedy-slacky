@@ -1,6 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDateColumn, OneToMany, OneToOne } from 'typeorm';
 import { SlackUser } from './slack-user.entity';
 import { Channel } from './channel.entity';
+import { Attachment } from './attachment.entity';
+import { MessageContent } from './message-content.entity';
 
 @Entity({ name: 'messages' })
 export class Message {
@@ -32,7 +34,19 @@ export class Message {
 
   @Column({ default: false })
   hasAttachments: boolean;
+  
+  @Column({ nullable: true })
+  contentHash: string;
 
   @Column({ type: 'jsonb', nullable: true })
   reactions: Record<string, any>;
+  
+  @Column({ type: 'jsonb', nullable: true })
+  metadata: Record<string, any>;
+  
+  @OneToMany(() => Attachment, (attachment) => attachment.message)
+  attachments: Attachment[];
+  
+  @OneToOne(() => MessageContent, (content) => content.message)
+  content: MessageContent;
 }

@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from 'typeorm';
 import { UserQuery } from './user-query.entity';
+import { Conversation } from './conversation.entity';
 
 @Entity({ name: 'users' })
 export class User {
@@ -20,7 +21,13 @@ export class User {
 
   @Column({ nullable: true })
   lastLogin: Date;
+  
+  @Column({ default: false })
+  isAdmin: boolean;
 
   @OneToMany(() => UserQuery, (userQuery) => userQuery.user)
   queries: UserQuery[];
+  
+  @OneToMany(() => Conversation, (conversation) => conversation.user)
+  conversations: Conversation[];
 }

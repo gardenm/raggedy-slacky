@@ -3,3 +3,7 @@ export * from './slack-user.entity';
 export * from './channel.entity';
 export * from './message.entity';
 export * from './user-query.entity';
+export * from './message-content.entity';
+export * from './attachment.entity';
+export * from './conversation.entity';
+export * from './conversation-message.entity';
