@@ -94,16 +94,48 @@ docker-compose up -d
 
 ## Working with Slack Exports
 
-1. Export your Slack workspace data (as a workspace admin)
-2. Unzip the export to a location accessible by the application
-3. Use the import API endpoint to process the data:
+### Preparing the Slack Export
 
+1. Export your Slack workspace data (as a workspace admin)
+2. Unzip the export to the `data/slack-archive` directory in the project root
+   - This directory is gitignored and already configured in the environment
+   - The directory structure should look like:
+     ```
+     data/slack-archive/
+     ├── users.json
+     ├── channels.json
+     ├── channel1/
+     │   ├── 2020-01-01.json
+     │   └── ...
+     ├── channel2/
+     │   ├── 2020-01-01.json
+     │   └── ...
+     └── ...
+     ```
+
+### Importing the Data
+
+You can import the data using the API endpoint in one of two ways:
+
+1. Using the default path (recommended):
 ```bash
 curl -X POST http://localhost:3000/api/admin/slack/import \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
-  -d '{"path": "/path/to/slack/export", "resetData": false}'
+  -d '{"resetData": false}'
 ```
+
+2. Specifying a custom path:
+```bash
+curl -X POST http://localhost:3000/api/admin/slack/import \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{"path": "/custom/path/to/slack/export", "resetData": false}'
+```
+
+The `resetData` parameter (optional, defaults to `false`):
+- When `true`: Clears existing data before importing
+- When `false`: Adds new data without removing existing data
 
 ## API Endpoints
 

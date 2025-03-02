@@ -38,11 +38,20 @@ lerna-debug.log*
 .env.development
 .env.test
 .env.production
+.env.docker-dev
 .env.*
+
+# Allow env examples and templates
+!.env.example
+!.env.template
 
 # Database
 *.sqlite
 /data
+
+# Slack archive data
+/data/slack-archive/
+*.json
 
 # Build artifacts
 /.angular

@@ -1,8 +1,9 @@
 import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
 export class ImportRequestDto {
+  @IsOptional()
   @IsString()
-  path: string;
+  path?: string;
 
   @IsOptional()
   @IsBoolean()
