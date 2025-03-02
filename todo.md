@@ -13,7 +13,7 @@
   - [x] PostgreSQL database
   - [x] Chroma vector database
 - [x] Configure Jest for testing
-- [ ] Create .env template and .env.example files
+- [x] Create .env template and .env.example files
 - [ ] Implement health check endpoint (GET /api/health)
 - [ ] Write test for health check endpoint
 - [x] Create README.md with project documentation
