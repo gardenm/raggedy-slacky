@@ -1,12 +1,12 @@
 version: '3.8'
 
 services:
-  app:
+  backend:
     build:
       context: .
       dockerfile: Dockerfile.dev
     ports:
-      - "3000:3000"
+      - "3001:3000"
       - "9229:9229" # for debugging
     env_file:
       - .env.docker-dev
@@ -17,6 +17,24 @@ services:
       - ./:/app
       - /app/node_modules
       - ./data/slack-archive:/app/data/slack-archive:ro
+    restart: unless-stopped
+    networks:
+      - app-network
+      
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://backend:3000/api
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
     restart: unless-stopped
     networks:
       - app-network

@@ -48,14 +48,26 @@ jobs:
       #     username: ${{ github.actor }}
       #     password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build Docker image
+      - name: Build Backend Docker image
         uses: docker/build-push-action@v4
         with:
           context: .
           push: false # Set to true when you add container registry
           tags: |
-            raggedy-slacky:${{ env.TAG }}
-            raggedy-slacky:${{ env.VERSION }}
+            raggedy-slacky-backend:${{ env.TAG }}
+            raggedy-slacky-backend:${{ env.VERSION }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          
+      - name: Build Frontend Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile
+          push: false # Set to true when you add container registry
+          tags: |
+            raggedy-slacky-frontend:${{ env.TAG }}
+            raggedy-slacky-frontend:${{ env.VERSION }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
