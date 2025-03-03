@@ -11,6 +11,10 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+# NPM lock files (using pnpm only)
+package-lock.json
+yarn.lock
+
 # OS
 .DS_Store
 
