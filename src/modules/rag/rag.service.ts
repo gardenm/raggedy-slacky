@@ -49,7 +49,11 @@ export class RagService {
         intent: ChatIntentType.CONVERSATION,
         sources: 0,
         metadata: {
+          promptTokens: 0,
+          completionTokens: 0,
+          totalTokens: 0,
           latencyMs: Date.now() - startTime,
+          model: 'none'
         }
       };
     }
@@ -76,7 +80,7 @@ export class RagService {
     };
     
     // Use the search service to get comprehensive results
-    const searchResults = await this.searchService.search(searchRequest);
+    const searchResults = await this.searchService.search(userId, searchRequest);
     
     // Convert search results to context format for RAG
     const contexts = searchResults.results.map(result => ({
@@ -84,9 +88,9 @@ export class RagService {
       metadata: {
         messageId: result.id,
         channelName: result.channel?.name,
-        channelId: result.channelId,
-        userName: result.user?.name || result.user?.realName,
-        userId: result.userId,
+        channelId: result.channel?.id,
+        userName: result.slackUser?.realName || result.slackUser?.username,
+        userId: result.slackUser?.id,
         timestamp: result.timestamp,
         threadTs: result.threadTs,
       }
@@ -157,7 +161,7 @@ export class RagService {
       userId,
     };
     
-    const searchResults = await this.searchService.search(searchRequest);
+    const searchResults = await this.searchService.search(userId, searchRequest);
     
     // Get message contents for summarization
     const messagesToSummarize = searchResults.results.map(r => r.content);
@@ -175,7 +179,11 @@ export class RagService {
       sources: messagesToSummarize.length,
       references,
       metadata: {
+        promptTokens: 0,
+        completionTokens: 0,
+        totalTokens: 0,
         latencyMs: Date.now() - startTime,
+        model: 'none'
       }
     };
   }

@@ -25,7 +25,7 @@ export class RagController {
    */
   @UseGuards(JwtAuthGuard)
   @Post()
-  async chat(@Request() req, @Body() chatRequest: ChatRequestDto): Promise<ChatResponseDto> {
+  async chat(@Request() req: any, @Body() chatRequest: ChatRequestDto): Promise<ChatResponseDto> {
     this.logger.log(`Chat request received from user ${req.user.userId}: ${chatRequest.message.substring(0, 100)}...`);
     
     // Track usage for analytics (non-blocking)
@@ -50,7 +50,7 @@ export class RagController {
   @UseGuards(JwtAuthGuard)
   @Get('history')
   async getConversationHistory(
-    @Request() req,
+    @Request() req: any,
     @Query('limit') limit: number = 10,
     @Query('offset') offset: number = 0
   ) {
@@ -69,7 +69,7 @@ export class RagController {
    */
   @UseGuards(JwtAuthGuard)
   @Get('conversation/:id')
-  async getConversation(@Request() req, @Param('id') conversationId: string) {
+  async getConversation(@Request() req: any, @Param('id') conversationId: string) {
     // TODO: Implement conversation retrieval from database
     // This would retrieve all messages in a specific conversation
     return {

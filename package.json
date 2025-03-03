@@ -5,9 +5,7 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
-  "packageManager": "pnpm@8.15.4",
   "scripts": {
-    "prepare": "pnpm dlx @nestjs/cli",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
@@ -34,6 +32,8 @@
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/typeorm": "^10.0.1",
+    "argon2-browser": "^1.18.0",
+    "axios": "^1.8.1",
     "bcrypt": "^5.1.1",
     "chromadb": "^1.10.4",
     "class-transformer": "^0.5.1",

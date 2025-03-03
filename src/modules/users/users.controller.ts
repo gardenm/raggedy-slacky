@@ -8,8 +8,11 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  async getProfile(@Request() req) {
+  async getProfile(@Request() req: any) {
     const user = await this.usersService.findById(req.user.userId);
+    if (!user) {
+      return { error: 'User not found' };
+    }
     return {
       id: user.id,
       username: user.username,

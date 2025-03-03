@@ -83,7 +83,7 @@ export class IndexingService {
             slackUserId: user.id,
             username: user.name,
             realName: user.real_name,
-            avatar: user.profile?.image_192 || user.profile?.image_72 || null,
+            avatar: user.profile?.image_192 || user.profile?.image_72 || '',
           });
 
           await this.slackUsersRepository.save(newUser);
@@ -112,7 +112,7 @@ export class IndexingService {
           const newChannel = this.channelsRepository.create({
             slackChannelId: channel.id,
             name: channel.name,
-            purpose: channel.purpose?.value || null,
+            purpose: channel.purpose?.value || '',
             isPrivate: channel.is_private,
           });
 
@@ -220,7 +220,7 @@ export class IndexingService {
       return;
     }
 
-    const attachments = message.files.map(file => {
+    const attachments = message.files.map((file: any) => {
       return this.attachmentsRepository.create({
         messageId: messageEntity.id,
         slackFileId: file.id,
@@ -336,7 +336,7 @@ export class IndexingService {
 
             // Process attachments if present
             if (message.files && message.files.length > 0) {
-              const attachments = message.files.map(file => {
+              const attachments = message.files.map((file: any) => {
                 return this.attachmentsRepository.create({
                   messageId: savedMessage.id,
                   slackFileId: file.id,

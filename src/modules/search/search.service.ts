@@ -6,6 +6,7 @@ import { MessageContent } from '../../entities/message-content.entity';
 import { Channel } from '../../entities/channel.entity';
 import { SlackUser } from '../../entities/slack-user.entity';
 import { UserQuery } from '../../entities/user-query.entity';
+import { Attachment } from '../../entities/attachment.entity';
 import { VectorService } from './vector.service';
 import { SearchRequestDto } from './dto/search-request.dto';
 import { SearchResponseDto, SearchResultItemDto } from './dto/search-response.dto';
@@ -27,8 +28,22 @@ interface SearchOptions {
   sortDirection?: 'ASC' | 'DESC';
 }
 
-interface MessageWithContent extends Message {
-  content?: MessageContent;
+// This interface includes the joined MessageContent
+interface MessageWithContent {
+  id: number;
+  slackMessageId: string;
+  slackUser: SlackUser;
+  slackUserId: number;
+  channel: Channel;
+  channelId: number;
+  timestamp: Date;
+  threadTs?: string;
+  hasAttachments: boolean;
+  contentHash?: string;
+  reactions?: Record<string, any>;
+  metadata?: Record<string, any>;
+  attachments?: Attachment[];
+  content: MessageContent;
 }
 
 @Injectable()
@@ -417,7 +432,7 @@ export class SearchService {
     userId: number, 
     searchRequest: SearchRequestDto, 
     resultCount: number
-  ): Promise<UserQuery> {
+  ): Promise<UserQuery | null> {
     try {
       const userQuery = this.userQueriesRepository.create({
         userId,

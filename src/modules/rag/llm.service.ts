@@ -125,8 +125,8 @@ export class LlmService {
       conversationId?: string;
     }
   ): Promise<LlmResponseDto> {
+    const startTime = Date.now();
     try {
-      const startTime = Date.now();
       
       // Extract just the text for context fitting
       const contextTexts = contexts.map(c => c.text);
@@ -197,8 +197,8 @@ export class LlmService {
       conversationId?: string;
     }
   ): Promise<LlmResponseDto> {
+    const startTime = Date.now();
     try {
-      const startTime = Date.now();
       
       // Create conversation prompt
       const messages = PromptTemplates.createConversationPrompt(

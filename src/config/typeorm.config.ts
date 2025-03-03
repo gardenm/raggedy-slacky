@@ -15,7 +15,10 @@ export const typeOrmConfig: DataSourceOptions = {
   database: process.env.DB_DATABASE || 'raggedy-slacky',
   synchronize: process.env.NODE_ENV === 'development',
   logging: process.env.DB_LOGGING === 'true',
-  entities: Object.values(entities),
+  entities: [
+    // For development, handle each entity individually
+    'dist/entities/**/*.entity.js'
+  ],
   migrations: ['dist/migrations/*.js'],
   migrationsTableName: 'migrations',
 };

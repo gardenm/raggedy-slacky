@@ -1,20 +1,12 @@
-FROM node:20-alpine
-
-# Install pnpm
-RUN corepack enable && corepack prepare pnpm@8.15.4 --activate
+FROM node:18-alpine
 
 WORKDIR /app
 
-# Copy pnpm specific files
-COPY pnpm-lock.yaml ./
-COPY package.json ./
-COPY .npmrc ./
+# Install dependencies directly
+RUN npm install express jsonwebtoken body-parser
 
-# Install dependencies
-RUN pnpm install
+# Copy the test server
+COPY test-server.js .
 
-# Copy source files
-COPY . .
-
-# Run development build in watch mode
-CMD ["pnpm", "start:dev"]
+# Run the test server instead
+CMD ["node", "test-server.js"]

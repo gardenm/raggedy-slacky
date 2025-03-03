@@ -27,7 +27,13 @@ export class SlackService {
     const resolvedPath = importPath || this.defaultExportPath;
     
     const startTime = Date.now();
-    const result = await this.indexingService.indexAll(resolvedPath, resetData, batchOptions);
+    // Ensure batchOptions has the required properties
+    const processedBatchOptions = batchOptions ? {
+      batchSize: batchOptions.batchSize || 100,
+      concurrency: batchOptions.concurrency || 5
+    } : undefined;
+    
+    const result = await this.indexingService.indexAll(resolvedPath, resetData, processedBatchOptions);
     const duration = (Date.now() - startTime) / 1000;
     
     return {

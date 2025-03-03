@@ -21,7 +21,7 @@ export class SearchController {
    */
   @UseGuards(JwtAuthGuard)
   @Post()
-  async search(@Request() req, @Body() searchRequest: SearchRequestDto) {
+  async search(@Request() req: any, @Body() searchRequest: SearchRequestDto) {
     return this.searchService.search(req.user.userId, searchRequest);
   }
 
@@ -49,7 +49,7 @@ export class SearchController {
   @UseGuards(JwtAuthGuard)
   @Get('history')
   async getSearchHistory(
-    @Request() req,
+    @Request() req: any,
     @Query('limit') limit = 20
   ) {
     return this.searchService.getUserQueryHistory(req.user.userId, limit);
