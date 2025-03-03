@@ -51,7 +51,13 @@ lerna-debug.log*
 
 # Slack archive data
 /data/slack-archive/
-*.json
+/data/slack-archive/**/*.json
+
+# Allow specific JSON files that should be committed
+!frontend/package.json
+!package.json
+!tsconfig.json
+!jest.config.js
 
 # Build artifacts
 /.angular
